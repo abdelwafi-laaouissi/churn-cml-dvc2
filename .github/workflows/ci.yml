@@ -46,11 +46,11 @@ jobs:
           dvc push
 
       - name: Publish CML report
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "## Metrics" > report.md
-          awk 'NR%4{print "  "$0}{print ""}' metrics.txt >> report.md
-          echo "## Confusion Matrix" >> report.md
-          echo "![](./conf_matrix.png)" >> report.md
-          cml comment create --commit report.md
+          env:
+            REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            echo "## Metrics" > report.md
+            cat metrics.txt >> report.md
+            echo "## Confusion Matrix" >> report.md
+            echo "![](./conf_matrix.png)" >> report.md
+            cml comment create --target=commit report.md
